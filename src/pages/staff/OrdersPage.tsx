@@ -30,7 +30,7 @@ const OrdersPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>('');
+  const [statusFilter, setStatusFilter] = useState<string>('ALL');
   const [updatingOrder, setUpdatingOrder] = useState<string | null>(null);
   
   useEffect(() => {
@@ -130,7 +130,7 @@ const OrdersPage = () => {
         order.customerPhone.includes(searchTerm);
       
       // Apply status filter
-      const matchesStatus = !statusFilter || order.status === statusFilter;
+      const matchesStatus = statusFilter === 'ALL' || order.status === statusFilter;
       
       return matchesSearch && matchesStatus;
     })
@@ -171,7 +171,7 @@ const OrdersPage = () => {
                 </div>
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Statuses</SelectItem>
+                <SelectItem value="ALL">All Statuses</SelectItem>
                 <SelectItem value="PENDING">Pending</SelectItem>
                 <SelectItem value="CONFIRMED">Confirmed</SelectItem>
                 <SelectItem value="PREPARING">Preparing</SelectItem>
@@ -282,7 +282,7 @@ const OrdersPage = () => {
                 ) : (
                   <TableRow>
                     <TableCell colSpan={7} className="text-center py-8 text-gray-500">
-                      No orders found. {searchTerm || statusFilter ? "Try adjusting your filters." : ""}
+                      No orders found. {searchTerm || statusFilter !== 'ALL' ? "Try adjusting your filters." : ""}
                     </TableCell>
                   </TableRow>
                 )}

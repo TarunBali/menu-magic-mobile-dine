@@ -1,73 +1,83 @@
-# Welcome to your Lovable project
 
-## Project info
+# FoodieSpot Restaurant Ordering System
 
-**URL**: https://lovable.dev/projects/fff533aa-44c6-4f90-be06-5ac8b3d2fed8
+A modern restaurant ordering system built with React, TypeScript, and Tailwind CSS.
 
-## How can I edit this code?
+## Live Demo
 
-There are several ways of editing your application.
+[View the live demo on GitHub Pages](#) (Add your GitHub Pages URL once deployed)
 
-**Use Lovable**
+## Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/fff533aa-44c6-4f90-be06-5ac8b3d2fed8) and start prompting.
+- Customer Portal:
+  - Menu browsing and item selection
+  - Cart management
+  - Order placement and tracking
+  - Order history
+  - Login with OTP verification
 
-Changes made via Lovable will be committed automatically to this repo.
+- Staff Portal:
+  - Order management dashboard
+  - Real-time order status updates
+  - Sales reports and analytics
+  - Staff authentication
 
-**Use your preferred IDE**
+## Getting Started
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Prerequisites
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- Node.js (v16 or higher)
+- NPM or Yarn
 
-Follow these steps:
+### Installation
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/foodiespot.git
+   cd foodiespot
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+2. Install dependencies:
+   ```
+   npm install
+   ```
 
-# Step 3: Install the necessary dependencies.
-npm i
+3. Start development server:
+   ```
+   npm run dev
+   ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+## Deployment
 
-**Edit a file directly in GitHub**
+This project is configured for easy deployment to GitHub Pages. Simply push to the `main` branch, and the GitHub Action will automatically deploy your site.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Configuration
 
-**Use GitHub Codespaces**
+By default, the application runs in "Demo Mode" using mock data. To switch to production mode:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+1. Go to `/config` in the deployed application
+2. Download the sample configuration file
+3. Fill in your API details
+4. Upload the modified configuration file
 
-## What technologies are used for this project?
+> ⚠️ **Security Note**: Never commit the configuration file with real API keys to your repository. The app is designed to load this file at runtime only.
 
-This project is built with:
+## Project Structure
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- `src/components`: Reusable UI components
+- `src/pages`: Application pages and views
+- `src/context`: React context providers
+- `src/services`: API service functions
+- `src/types`: TypeScript type definitions
+- `src/utils`: Utility functions
 
-## How can I deploy this project?
+## License
 
-Simply open [Lovable](https://lovable.dev/projects/fff533aa-44c6-4f90-be06-5ac8b3d2fed8) and click on Share -> Publish.
+[MIT License](LICENSE)
 
-## Can I connect a custom domain to my Lovable project?
+## Acknowledgments
 
-Yes, you can!
+- Built with [Vite](https://vitejs.dev/)
+- UI components from [shadcn/ui](https://ui.shadcn.com/)
+- Icons from [Lucide React](https://lucide.dev/)
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)

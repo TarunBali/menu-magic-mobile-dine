@@ -1,0 +1,23 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>FoodieSpot - Redirecting</title>
+  <script type="text/javascript">
+    // GitHub Pages 404 hack for SPA routing
+    // Redirects all 404s to index.html to let the SPA router handle it
+    const segmentCount = 0; // Adjust if your GitHub Pages site is in a subfolder
+    const location = window.location;
+    const redirectPath = location.pathname.split('/').slice(0, 1 + segmentCount).join('/') + '/?path=' + 
+      encodeURIComponent(location.pathname.slice(1)) + 
+      (location.search ? '&query=' + encodeURIComponent(location.search.slice(1)) : '');
+    
+    window.location.replace(redirectPath);
+  </script>
+</head>
+<body>
+  <h1>Redirecting...</h1>
+  <p>If you are not redirected automatically, <a href="/">click here</a>.</p>
+</body>
+</html>

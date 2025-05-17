@@ -1,6 +1,6 @@
-
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { useToast } from '@/components/ui/use-toast';
+import { getConfig } from '@/utils/configUtils';
 
 interface User {
   phone: string;
@@ -40,6 +40,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [staffUser, setStaffUser] = useState<StaffUser | null>(null);
   const { toast } = useToast();
 
+  // Helper to determine if we should use mock data or real API
+  const useMockAuth = () => {
+    const config = getConfig();
+    return config.isDemo;
+  };
+
   // Load user from localStorage on mount
   useEffect(() => {
     const savedUser = localStorage.getItem('restaurantAppUser');
@@ -57,16 +63,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // In a real app, this would call an API to send OTP
   const loginWithOTP = async (phone: string): Promise<boolean> => {
     try {
-      // Simulate API call to send OTP
-      console.log(`Sending OTP to phone number: ${phone}`);
-      
-      // For demo purposes, we'll use a fixed OTP: 123456
-      localStorage.setItem(`otp_${phone}`, '123456');
-      
-      toast({
-        title: "OTP Sent!",
-        description: `A verification code has been sent to ${phone}. For this demo, the OTP is 123456.`,
-      });
+      if (useMockAuth()) {
+        // Demo mode - simulate API call to send OTP
+        console.log(`Sending OTP to phone number: ${phone}`);
+        
+        // For demo purposes, we'll use a fixed OTP: 123456
+        localStorage.setItem(`otp_${phone}`, '123456');
+        
+        toast({
+          title: "OTP Sent!",
+          description: `A verification code has been sent to ${phone}. For this demo, the OTP is 123456.`,
+        });
+      } else {
+        // Production mode - would call actual API
+        const config = getConfig();
+        console.log(`Would call ${config.apiEndpoints.auth}/send-otp with phone: ${phone}`);
+        
+        // Since we don't have a real backend yet, still use the demo behavior
+        localStorage.setItem(`otp_${phone}`, '123456');
+        
+        toast({
+          title: "OTP Sent!",
+          description: `A verification code has been sent to ${phone}.`,
+        });
+      }
       
       return true;
     } catch (error) {
@@ -83,28 +103,58 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // In a real app, this would verify OTP with a backend API
   const verifyOTP = async (phone: string, otp: string): Promise<boolean> => {
     try {
-      // Simulate API call to verify OTP
-      const savedOTP = localStorage.getItem(`otp_${phone}`);
-      
-      if (savedOTP === otp) {
-        const userData: User = { phone };
-        setUser(userData);
-        localStorage.setItem('restaurantAppUser', JSON.stringify(userData));
-        localStorage.removeItem(`otp_${phone}`);
+      if (useMockAuth()) {
+        // Demo mode - verify locally
+        const savedOTP = localStorage.getItem(`otp_${phone}`);
         
-        toast({
-          title: "Login Successful",
-          description: "You have successfully logged in.",
-        });
-        
-        return true;
+        if (savedOTP === otp) {
+          const userData: User = { phone };
+          setUser(userData);
+          localStorage.setItem('restaurantAppUser', JSON.stringify(userData));
+          localStorage.removeItem(`otp_${phone}`);
+          
+          toast({
+            title: "Login Successful",
+            description: "You have successfully logged in.",
+          });
+          
+          return true;
+        } else {
+          toast({
+            title: "Invalid OTP",
+            description: "The OTP you entered is incorrect. Please try again.",
+            variant: "destructive",
+          });
+          return false;
+        }
       } else {
-        toast({
-          title: "Invalid OTP",
-          description: "The OTP you entered is incorrect. Please try again.",
-          variant: "destructive",
-        });
-        return false;
+        // Production mode - would call actual API
+        const config = getConfig();
+        console.log(`Would call ${config.apiEndpoints.auth}/verify-otp with phone: ${phone} and OTP`);
+        
+        // Since we don't have a real backend yet, still use the demo behavior
+        const savedOTP = localStorage.getItem(`otp_${phone}`);
+        
+        if (savedOTP === otp) {
+          const userData: User = { phone };
+          setUser(userData);
+          localStorage.setItem('restaurantAppUser', JSON.stringify(userData));
+          localStorage.removeItem(`otp_${phone}`);
+          
+          toast({
+            title: "Login Successful",
+            description: "You have successfully logged in.",
+          });
+          
+          return true;
+        } else {
+          toast({
+            title: "Invalid OTP",
+            description: "The OTP you entered is incorrect. Please try again.",
+            variant: "destructive",
+          });
+          return false;
+        }
       }
     } catch (error) {
       console.error('Failed to verify OTP:', error);

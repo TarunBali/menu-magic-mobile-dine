@@ -21,6 +21,9 @@ import StaffDashboardPage from "./pages/staff/DashboardPage";
 import StaffOrdersPage from "./pages/staff/OrdersPage";
 import StaffReportsPage from "./pages/staff/ReportsPage";
 
+// Config page
+import ConfigPage from "./pages/ConfigPage";
+
 // Auth components
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import StaffProtectedRoute from "./components/auth/StaffProtectedRoute";
@@ -58,6 +61,9 @@ const App = () => (
               <Route path="/staff/dashboard" element={<StaffProtectedRoute><StaffDashboardPage /></StaffProtectedRoute>} />
               <Route path="/staff/orders" element={<StaffProtectedRoute><StaffOrdersPage /></StaffProtectedRoute>} />
               <Route path="/staff/reports" element={<StaffProtectedRoute><StaffReportsPage /></StaffProtectedRoute>} />
+
+              {/* Config Route */}
+              <Route path="/config" element={<ConfigPage />} />
 
               {/* Not Found */}
               <Route path="*" element={<NotFound />} />

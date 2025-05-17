@@ -7,7 +7,8 @@ import StaffLayout from '@/components/layout/StaffLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { getAllOrders } from '@/services/api';
 import { Order, OrderStatus } from '@/types/order';
-import { BarChart } from '@/components/ui/chart';
+import { ChartContainer } from '@/components/ui/chart';
+import { BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const DashboardPage = () => {
   const { staffUser } = useAuth();
@@ -168,14 +169,15 @@ const DashboardPage = () => {
             </CardHeader>
             <CardContent className="h-80">
               {!loading && (
-                <BarChart
-                  data={chartData}
-                  index="name"
-                  categories={["value"]}
-                  colors={["orange"]}
-                  valueFormatter={(value) => `${value} orders`}
-                  yAxisWidth={40}
-                />
+                <ChartContainer config={{}} className="w-full h-full">
+                  <RechartsBarChart data={chartData} margin={{ top: 20, right: 20, left: 20, bottom: 30 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Bar dataKey="value" fill="#f97316" radius={[4, 4, 0, 0]} />
+                  </RechartsBarChart>
+                </ChartContainer>
               )}
             </CardContent>
           </Card>

@@ -19,7 +19,7 @@ const OrderHistoryPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>('');
+  const [statusFilter, setStatusFilter] = useState<string>('ALL');
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -82,7 +82,7 @@ const OrderHistoryPage = () => {
     const matchesSearch = order.id.toLowerCase().includes(searchTerm.toLowerCase());
     
     // Apply status filter
-    const matchesStatus = !statusFilter || order.status === statusFilter;
+    const matchesStatus = statusFilter === 'ALL' || order.status === statusFilter;
     
     return matchesSearch && matchesStatus;
   });
@@ -141,7 +141,7 @@ const OrderHistoryPage = () => {
                 </div>
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Statuses</SelectItem>
+                <SelectItem value="ALL">All Statuses</SelectItem>
                 <SelectItem value="PENDING">Pending</SelectItem>
                 <SelectItem value="CONFIRMED">Confirmed</SelectItem>
                 <SelectItem value="PREPARING">Preparing</SelectItem>
@@ -217,7 +217,7 @@ const OrderHistoryPage = () => {
         ) : (
           <Card>
             <CardContent className="text-center py-12">
-              {searchTerm || statusFilter ? (
+              {searchTerm || statusFilter !== 'ALL' ? (
                 <>
                   <h3 className="text-lg font-semibold mb-2">No matching orders found</h3>
                   <p className="text-gray-600 mb-6">Try adjusting your filters to find what you're looking for.</p>
@@ -225,7 +225,7 @@ const OrderHistoryPage = () => {
                     variant="outline"
                     onClick={() => {
                       setSearchTerm('');
-                      setStatusFilter('');
+                      setStatusFilter('ALL');
                     }}
                   >
                     Clear Filters
